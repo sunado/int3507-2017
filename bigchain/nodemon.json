@@ -1,0 +1,14 @@
+{
+  "watch": [
+    "routes",
+    "controllers",
+    "config",
+    "./app.js"
+  ],
+  "ignore": ["node_modules"],
+  "script": "./bin/www",
+  "options": {
+    "extensions": ["js", "ts"],
+    "exec": "node"
+  }
+}
