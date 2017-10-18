@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import * as config from '../../../config/config.json';
 import 'rxjs/Rx';
 
 import { Score } from '../_models/score.model';
@@ -27,7 +28,7 @@ export class ScoreFormComponent implements OnInit {
     // headers.append("Content-Type", 'application/json');
     // headers.append('Access-Control-Allow-Origin','*');
     // var options = new RequestOptions({ headers: headers });
-    this.http.post("/api/create", body, options).map(resp => resp.json())
+    this.http.post(config.SCORE_URL + "/create", body, options).map(resp => resp.json())
       .subscribe((resp) => {
         console.log(resp);
     });

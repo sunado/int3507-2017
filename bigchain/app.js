@@ -19,7 +19,8 @@ app.set('view engine', 'hbs');
 mongoose.connect(config.USER_DB, {
     socketTimeoutMS: 0,
     keepAlive: true,
-    reconnectTries: 30
+    reconnectTries: 30,
+    useMongoClient: true
 }); // connect to database
 app.set('superSecret', config.SECRET); // secret variable
 
@@ -32,8 +33,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/api', users);
-app.use('/apiv1',bigchain);
+// app.use('/api', users);
+app.use('/api', bigchain);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

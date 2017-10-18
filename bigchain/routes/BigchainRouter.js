@@ -65,7 +65,8 @@ router.get('/listOutputs/key=:key/spent=:spent', function (req,res) {
 
 router.get('/listScore/course=:name', function (req,res) {
     console.log("listscore");
-    controller.listScore(req.params.name, function (data) {
+    controller.searchAssets(req.params.name, function (data) {
+        console.log('data', data);
         res.json(data);
     })
 });
