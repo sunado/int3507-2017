@@ -1,11 +1,9 @@
 {
   "watch": [
-    "routes",
-    "controllers",
-    "config",
-    "./app.js"
+    "./"
   ],
-  "ignore": ["node_modules"],
+  "verbose": true,
+  "ignore": ["node_modules", "client", "README.md"],
   "script": "./bin/www",
   "options": {
     "extensions": ["js", "ts"],

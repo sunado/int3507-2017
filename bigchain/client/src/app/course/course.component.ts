@@ -26,7 +26,7 @@ export class CourseComponent implements OnInit {
     headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT');
     headers.append('Access-Control-Allow-Origin','*');
     // var options = new RequestOptions({ headers: headers });
-    this.http.get(config.SCORE_URL + "/listScore/course=" + this.course_id, options).map(resp => resp.json())
+    this.http.get(config.SCORE_API + '/listScore/course=' + this.course_id, options).map(resp => resp.json())
       .subscribe((resp) => {
         this.students = resp;
 
