@@ -4,3 +4,8 @@ node_modules/
 public/images/
 public/javascripts/
 client/node_modules/
+
+.sass-cache
+
+bower_components
+
