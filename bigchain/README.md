@@ -10,7 +10,7 @@
 ### Mô tả đề tài của nhóm:
 Xây dựng công cụ quản lý và chia sẻ điểm an toàn dựa vào BigchainDB
 
-Sau đây là giới thiệu một số công nghệ sử dụng : 
+Sau đây là giới thiệu một số công nghệ sử dụng :
 
 ### Giới thiệu về blockchain
 Blockchain (chuỗi khối), tên ban đầu block chain là một cơ sở dữ liệu phân cấp lưu trữ thông tin trong các khối thông tin được liên kết với nhau bằng mã hóa và mở rộng theo thời gian. Mỗi khối thông tin đều chứa thông tin về thời gian khởi tạo và được liên kết tới khối trước đó, kèm một mã thời gian và dữ liệu giao dịch. Blockchain được thiết kế để chống lại việc thay đổi của dữ liệu: Một khi dữ liệu đã được mạng lưới chấp nhận thì sẽ không có cách nào thay đổi được nó.
@@ -83,7 +83,7 @@ Các thứ tự hàm AES sẽ thực hiện:
 
 Ở tầng dưới, BigChainDB sử dụng hai cơ sở dữ liệu phân tán, S(bộ giao dịch) và C(chuỗi khối). Chúng được kết nối bằng thuật toán đồng thuận BigChainDB(BigchainDB Consensus Algorithm-BCA). Thuật toán BCA chạy trên mỗi nút đã được ký kết(signing node), cùng với các nút khác trở thành một mạng lưới. Những người dùng(client) không ký kết có thể kết nỗi với mạng lưới của BigChainDB và tùy quyền mà họ có thể đọc, phát hành tài sản(asset), chuyển tài sản và hơn thế nữa.
 Với mỗi một cơ sở dữ liệu phân tán, S và C là một cơ sở dữ liệu "lớn" sẵn có(off-the-shell big data DB). BigChainDB không can thiệp vào hoạt động nội bộ của dữ liệu, vì vậy nó sẽ tận dụng các thuộc tính khả năng mở rộng của chúng, cũng như các tính năng như kiểm soát sửa đổi và lợi ích của chúng. Mỗi CSDL chạy thuật toán đồng thuận nội bộ riêng cho tính nhất quán.
-Các tính năng của chuỗi khối được cho vào cơ sở dữ liệu này: 
+Các tính năng của chuỗi khối được cho vào cơ sở dữ liệu này:
 * Kiểm soát phi tập trung(Decentralized control): Không đối tượng nào sở hữu hay điều khiển mạng lưới.
 * Tính không thay đổi (Immutability): Dữ liệu văn bản được chống giả mạo(vĩnh viễn).
 * Khả năng tạo và chuyển các tài sản trong mạng lưới mà không phụ thuộc vào thực thể trung tâm.
@@ -113,7 +113,7 @@ Một mô hình điển hình có cấu trúc như sau:
 * version: Phiên bản của giao dịch, với BigChainDB Server phiên bản 1.0.0 thì giá trị duy nhất được chấp nhận là "1.0".
 * inputs: Danh sách các đầu vào, các đầu vào biến đổi/sử dụng các đầu ra của các giao dịch trước đó bằng cách đáp ứng các yêu cầu về bảo mật,..Khi tạo mới 1 giao dịch thì phải có ít nhất 1 đầu vào.
 * outputs: Danh sách các đầu ra, mỗi đầu ra phải đáp ứng được các yêu cầu về mặt bảo mật nếu muốn sử dụng/chuyển đổi. Nó đồng thời cũng thể hiện phần tài sản(asset) gắn với đầu ra đó.</br>
-#### *Cách tính toán ID*: 
+#### *Cách tính toán ID*:
 1. Xây dựng một từ điển python bao gồm các thuộc tính: *version, inputs, outputs, operation, asset, metadata* và giá trị của chúng.
 2. Với mỗi đầu vào(input) thay thế toàn bộ chuỗi hoàn chỉnh(fulfillment) của nó với *null*.
 3. Biểu diễn từ điển trên như một chuỗi bytes(serialize).
@@ -142,7 +142,7 @@ Sau khi nhận được mô hình cho các khối(blocks) và các bình chọn(
 }
 ```
 ### Các đầu vào(inputs) và đầu ra(outputs)
-BigchainDB được mô phỏng xung quanh các tài sản, các đầu vào, các đầu ra và chúng là cơ chế để kiểm soát tài sản hoặc cổ phần được chuyển giao. Lượng tài sản được mã hóa bên trong đầu ra của một giao dịch, mỗi đầu ra có thể được dùng một cách riêng biệt. Để sử dụng một đầu ra, các điều kiện của đầu ra phải được đáp ứng bởi một đầu vào có chuỗi hoàn chỉnh(fulfillment) tương ứng. Mỗi đầu ra có thể được sử dụng duy nhất một lần với 1 đầu vào duy nhất phù hợp. 
+BigchainDB được mô phỏng xung quanh các tài sản, các đầu vào, các đầu ra và chúng là cơ chế để kiểm soát tài sản hoặc cổ phần được chuyển giao. Lượng tài sản được mã hóa bên trong đầu ra của một giao dịch, mỗi đầu ra có thể được dùng một cách riêng biệt. Để sử dụng một đầu ra, các điều kiện của đầu ra phải được đáp ứng bởi một đầu vào có chuỗi hoàn chỉnh(fulfillment) tương ứng. Mỗi đầu ra có thể được sử dụng duy nhất một lần với 1 đầu vào duy nhất phù hợp.
 ##### Các đầu vào
 Một đầu vào có cấu trúc như sau:
 ```javascript
@@ -240,7 +240,7 @@ Một khối có cấu trúc như sau:</br>
 }
 ```
 * `id`: Mã băm của các chuỗi bytes bên trong khối(ví dụ: timestamp, transactions,..). Nó được sử dụng như khóa chính của cơ sở dữ liệu.
-* `khối`: 
+* `khối`:
   * `timestamp`: Thời gian khối được tạo ra.
   * `transactions`: Danh sách các giao dịch bên trong khối.
   * `node_pubkey`: Khóa công khai của nút tạo khối.
