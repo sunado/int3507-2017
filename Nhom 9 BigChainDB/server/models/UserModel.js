@@ -9,6 +9,7 @@ module.exports = mongoose.model('User', new Schema({
     is_lec: Boolean,
     admin: Boolean,
     name: String,
-    email: String
+    email: String,
+    coin_name: String,
 }));
 

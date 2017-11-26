@@ -50,7 +50,10 @@ exports.authenticate = function (req, res, next) {
         publicKey: req.body.public_key
     }, function (err, user) {
         if (err) {
-            throw err;
+            res.json({
+                success: false,
+                message: "Can't find this user"
+            })
         }
 
         if (!user) {
@@ -65,7 +68,8 @@ exports.authenticate = function (req, res, next) {
                     admin: user.admin,
                     privateKey: req.body.private_key,
                     publicKey: user.publicKey,
-                    is_lec: user.is_lec
+                    is_lec: user.is_lec,
+                    coin_name: user.coin_name
                 };
                 var token = jwt.sign(payload, req.app.get('superSecret'), {
                     expiresIn: 60 * 60 * 24 // expires in 24 hours
@@ -75,7 +79,8 @@ exports.authenticate = function (req, res, next) {
                     message: 'Enjoy your token!',
                     token: token,
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    coin_name: user.coin_name
                 });
             }
         }
@@ -83,6 +88,7 @@ exports.authenticate = function (req, res, next) {
 };
 
 exports.listUser = function (req, res, next) {
+    
     User.find({}, function (err, users) {
         if(err) throw err;
         res.json(users);
@@ -96,28 +102,55 @@ exports.createUser = function (req, res, next) {
     var is_admin = req.body.is_admin == 'true' || false;
     var name = req.body.name;
     var email = req.body.email;
-    var user = new User({
+    var coin_name = req.body.coin_name;
+    var _user = new User({
         publicKey: key.publicKey,
         hashPwd: hash,
         admin: is_admin,
         is_lec: is_lec,
         email:  email,
-        name: name
+        name: name,
+        coin_name: coin_name
     });
-    user.save(function (err) {
-        if (err) throw err;
-
-        console.log('User saved successfully');
-        res.json({
-            success: true,
-            publicKey: key.publicKey,
-            privateKey: key.privateKey,
-            is_lec: is_lec,
-            admin: is_admin,
-            email: email,
-            name: name
-        });
-    });
+    User.findOne({
+        coin_name: coin_name
+    }, function(err,user) {
+        if(err) {
+            res.json({
+                success: false,
+                message: err
+            })
+        } else {
+            if (user && user.coin_name == coin_name) {
+                res.json({
+                    success: false,
+                    message: "Coin name exist. Please try another"
+                })
+            } else {
+                _user.save(function (err) {
+                    if (err) {
+                        res.json({
+                            success: false,
+                            message: err
+                        })
+                    }
+                    console.log('User saved successfully');
+                    res.json({
+                        success: true,
+                        publicKey: key.publicKey,
+                        privateKey: key.privateKey,
+                        is_lec: is_lec,
+                        admin: is_admin,
+                        email: email,
+                        name: name,
+                        coin_name: coin_name
+                    });
+                });
+            }
+        }
+        
+    })
+    
 };
 
 function createOnePoint(req, res, next) {
@@ -128,7 +161,7 @@ function createOnePoint(req, res, next) {
     console.log("base String: ",base);
     const encode = bcrypt.hashSync(base,saltCoin);
     const json = {
-        name: coinName,
+        name: userData.coin_name,
         coinToken: encode
     };
     console.log(json);
@@ -183,7 +216,11 @@ exports.createPoint = function (req,res) {
 exports.currentPoint = function (req,res) {
     const userData = req.decoded;
     //console.log(userData.publicKey);
-    bigchainAPI.searchAssets(coinName, function (json) {
+    var coin_name = req.query.coin_name;
+    if (!coin_name) {
+        coin_name = userData.coin_name;
+    }
+    bigchainAPI.searchAssets(coin_name, function (json) {
         //console.log(json);
         var tasks = {};
         console.log("make tasks");
@@ -227,8 +264,8 @@ function checkOwner(assetId,public_key, next) {
     })
 }
 
-function getPointList(publicKey,next) {
-    bigchainAPI.searchAssets(coinName, function (json) {
+function getPointList(publicKey,coin_name,next) {
+    bigchainAPI.searchAssets(coin_name, function (json) {
         //console.log(json);
         var tasks = {};
         for (index in json){
@@ -259,8 +296,9 @@ exports.tranferPoint = function (req, res) {
     const userData = req.decoded;
     const receiver = req.body.receiver;
     const numOfPoint = req.body.number;
+    const coin_name = req.body.coin_name;
     console.log("start ",numOfPoint);
-    getPointList(userData.publicKey, function (err,count,list) {
+    getPointList(userData.publicKey,coin_name, function (err,count,list) {
         if (err) throw err;
         console.log("get pointlist success ",count," ",list);
        if (count < numOfPoint ) {
