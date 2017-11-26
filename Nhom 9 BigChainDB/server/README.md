@@ -3,99 +3,82 @@
 **Method: `POST`**
 
 **Tham số**
-- blah blah
+- is_lec: boolean
+- email: String
+- name: String
+-coin_name: String
 
 **Kết quả trả về**
-- blah blah
+json chứa
+- success: boolean 
+- publickey: String
+- privatekey: string
 
 ## login
 **URL: `/api/authenticate`** \
 **Method: `POST`**
 
 **Tham số**
-- blah blah
+- publicKey
+- privateKey
 
 **Kết quả trả về**
-- blah blah
-
+ json chứa
+ - success: boolean
+ - token: String
+ 
 ## listUser
 **URL: `/api/users`** \
 **Method: `GET`**
 
+**Header**
+x-access-token: String
+
 **Tham số**
-- blah blah
 
 **Kết quả trả về** 
-- blah blah
+- Danh sach user
 
 ## makeCoin
 **URL: `/api/create`** \
 **Method: `GET`**
 
+**Header**
+x-access-token: String
+
 **Tham số**
-- blah blah
+- number: int
 
 **Kết quả trả về** 
-- blah blah
-
-## listOutput
-**URL: `/apiv1/listOutputs`** \
-**Method: `GET`**
-
-**Tham số**
-- blah blah
-
-**Kết quả trả về**
-- blah blah
-
-## getTransaction
-**URL: `/apiv1/transaction/`** \
-**Method: `GET`**
-
-**Tham số**
-- blah blah
-
-**Kết quả trả về**
-- blah blah
-
-## searchAsset
-**URL: `/apiv1/search=SunadoPoint`** \
-**Method: `GET`**
-
-**Tham số**
-- blah blah
-
-**Kết quả trả về**
-- blah blah 
+- success: boolean
 
 ## currentPoint
 **URL: `/api/current`** \
 **Method: `GET`**
 
+**Header**
+x-access-token: String
+
 **Tham số**
-- blah blah
+- coin_name: String
 
 **Kết quả trả về**
-- blah blah
+- số coin của tài khoản ứng với tên
 
 ## transferPoint
 **URL: `/api/transfer`** \
 **Method: `POST`**
 
-**Tham số**
-- blah blah
-
-**Kết quả trả về**
-- blah blah
-
-## listTransaction
-**URL: `/apiv1/listTransactions/`** \
-**Method: `GET`**
+**Header**
+x-access-token: String
 
 **Tham số**
-- blah blah
+- rceiver: publickey 
+-  number: int
+- coin_name: string
 
 **Kết quả trả về**
-- blah blah
+- success: boolean
+
 
 
