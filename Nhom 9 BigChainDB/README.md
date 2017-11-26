@@ -297,7 +297,7 @@ Lưu ý:
 ### Kiến trúc 
 
 ##### Thiết kế:
-![Alt text](/Nhom%209%20BigchainDB/assets/architecture.jpg?raw=true "architecture")
+![Alt text](./assets/architecture.jpg?raw=true "architecture")
 
 
 Tác dụng của từng thành phần:
